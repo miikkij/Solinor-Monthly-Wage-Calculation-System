@@ -1,6 +1,5 @@
 namespace Solinor.MonthlyWageCalculation.Calculations
 {
-    using System;
     using System.Linq;
     using System.Collections.Generic;
     using Solinor.MonthlyWageCalculation.Extensions;
@@ -9,10 +8,15 @@ namespace Solinor.MonthlyWageCalculation.Calculations
     public class DefaultWageCalculation : IWageCalculation
     {
         decimal regularSalary;
+
         decimal eveningSalary;
+
         decimal overtime25multiplier;
+
         decimal overtime50multiplier;
+
         decimal overtime100multiplier;
+
         string currencyChar;
 
         /// <summary>
@@ -24,7 +28,7 @@ namespace Solinor.MonthlyWageCalculation.Calculations
         /// <param name="overtime25multiplier">Overtime multiplier for first two hours</param>
         /// <param name="overtime50multiplier">Overtime multiplier for next two hours</param>
         /// <param name="overtime100multiplier">Overtime multiplier for rest of the hours</param>
-        public DefaultWageCalculation(string currencyChar, decimal regularHourSalary, decimal eveningHourSalary, 
+        public DefaultWageCalculation(string currencyChar, decimal regularHourSalary, decimal eveningHourSalary,
             decimal overtime25multiplier, decimal overtime50multiplier, decimal overtime100multiplier)
         {
             this.currencyChar = currencyChar;

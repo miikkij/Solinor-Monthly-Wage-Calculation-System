@@ -36,7 +36,7 @@ namespace Solinor.MonthlyWageCalculation.Models
         public Decimal GetBasePart()
         {
             // For currency calculations round dollar amounts to the nearest cent.
-            return Decimal.Multiply(this.OriginalPayPerHour, this.Hours);  
+            return Decimal.Multiply(this.OriginalPayPerHour, this.Hours);
         }
 
         public Decimal GetCompensatedPart()
@@ -48,14 +48,6 @@ namespace Solinor.MonthlyWageCalculation.Models
         public Decimal GetTotal()
         {
             return this.OriginalPayPerHour * this.CompensationMultiplier * this.Hours;
-        }
-
-        public string Total
-        {
-            get 
-            {
-                return this.GetTotal().ToString("n2");
-            }
         }
     }
 }

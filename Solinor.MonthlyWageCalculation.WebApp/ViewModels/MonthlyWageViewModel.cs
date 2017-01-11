@@ -23,20 +23,20 @@ namespace Solinor.MonthlyWageCalculation.WebApp.ViewModels
 
         public Decimal TotalPay { get; set; }
 
-        public string TotalPayRounded 
-        { 
-            get 
-            { 
-                return this.TotalPay.ToString("n2"); 
-            } 
-        }                
+        public string TotalPayRounded
+        {
+            get
+            {
+                return this.TotalPay.ToString("n2");
+            }
+        }
 
-        public DateTime Date 
-        { 
-            get 
+        public DateTime Date
+        {
+            get
             {
                 return this.PaymentEntries.FirstOrDefault().Date;
-            } 
+            }
         }
 
         public List<PaymentEntryViewModel> PaymentEntries { get; set; }

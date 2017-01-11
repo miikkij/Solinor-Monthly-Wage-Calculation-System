@@ -1,5 +1,6 @@
 namespace Solinor.MonthlyWageCalculation.Models
 {
+    using System.Linq;
     using System.Collections.Generic;
 
     /// <summary>
@@ -7,7 +8,7 @@ namespace Solinor.MonthlyWageCalculation.Models
     /// </summary>
     public class PersonnelWages
     {
-        public Dictionary<Person, List<WageSlip>> MonthlyWages = new Dictionary<Person, List<WageSlip>>();
+        private Dictionary<Person, List<WageSlip>> MonthlyWages = new Dictionary<Person, List<WageSlip>>();
 
         public void AddWageSlip(Person person, WageSlip monthlyWageSlip)
         {
@@ -28,5 +29,10 @@ namespace Solinor.MonthlyWageCalculation.Models
             }
             return result;
         }
+
+        public List<WageSlip> GetMonthlyWageSlips()
+        {
+            return MonthlyWages.SelectMany(x => x.Value).ToList();
+        }       
     }
 }

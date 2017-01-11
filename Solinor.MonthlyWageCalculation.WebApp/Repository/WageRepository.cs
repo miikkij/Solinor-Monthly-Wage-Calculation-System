@@ -24,12 +24,12 @@ namespace Solinor.MonthlyWageCalculation.WebApp.Repository
             var personViewModel = new PersonViewModel();
 
             var person = wageService.GetPersons().FirstOrDefault(x => x.Id.ToString() == id);
-            if (person != null) 
+            if (person != null)
             {
-                var wages = personnelWages.MonthlyWages.FirstOrDefault(x => x.Key.Id.ToString() == id).Value;
+                var wages = personnelWages.GetMonthlyWageSlips(person);
                 personViewModel.Id = person.Id;
                 personViewModel.Name = person.Name;
-                foreach(var wage in wages)
+                foreach (var wage in wages)
                 {
                     var monthlyWageViewModel = new MonthlyWageViewModel();
                     personViewModel.MonthlyWages.Add(monthlyWageViewModel);
@@ -39,9 +39,9 @@ namespace Solinor.MonthlyWageCalculation.WebApp.Repository
                     monthlyWageViewModel.TotalOvertimeHours = wage.GetTotalHours(HoursType.Overtime);
                     monthlyWageViewModel.TotalPay = wage.Totalpay();
                     monthlyWageViewModel.Person = personViewModel;
-                    foreach(var workday in wage.WorkDays)
+                    foreach (var workday in wage.Days)
                     {
-                        foreach(var wageEntry in workday.WageEntries())
+                        foreach (var wageEntry in workday.WageEntries())
                         {
                             var paymentEntry = new PaymentEntryViewModel();
                             paymentEntry.Currency = wageEntry.Currency;
@@ -62,10 +62,9 @@ namespace Solinor.MonthlyWageCalculation.WebApp.Repository
         {
             var personViewModels = new List<PersonViewModel>();
 
-            foreach(var personsWageSlipsKeyValuePair in personnelWages.MonthlyWages)
+            foreach (var wageSlip in personnelWages.GetMonthlyWageSlips())
             {
-                var person = personsWageSlipsKeyValuePair.Key;
-                var personViewModel = this.GetPerson(person.Id.ToString());
+                var personViewModel = this.GetPerson(wageSlip.personId.ToString());
                 personViewModels.Add(personViewModel);
             }
 
@@ -104,7 +103,7 @@ namespace Solinor.MonthlyWageCalculation.WebApp.Repository
             try
             {
                 wageService.UpdateDataFromCSV(loadCsvFile(filename));
-            } 
+            }
             catch (CsvRowDataHourEntryParseException exception)
             {
                 Console.WriteLine("Error while trying to parse CSV data");

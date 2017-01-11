@@ -11,9 +11,10 @@ namespace Solinor.MonthlyWageCalculation.Models
     public class WorkDay
     {
         IWageCalculation WageCalculation { get; }
+        
         IHoursCalculation HoursCalculation { get; }
 
-        public List<Hours> Hours = new List<Hours>();
+        private List<Hours> Hours = new List<Hours>();
 
         public WorkDay(List<Hours> hours, IWageCalculation wageCalculation, IHoursCalculation hoursCalculation)
         {
@@ -43,14 +44,6 @@ namespace Solinor.MonthlyWageCalculation.Models
             return this.WageEntries().Sum(x => x.GetTotal());
         }
 
-        public string Pay
-        {
-            get
-            {
-                return this.TotalWage().ToString("n2");
-            }
-        }
-
         public List<WageEntry> Entries
         {
             get
@@ -59,7 +52,7 @@ namespace Solinor.MonthlyWageCalculation.Models
             }
         }
 
-        public DateTime GetDate
+        public DateTime Date
         {
             get
             {

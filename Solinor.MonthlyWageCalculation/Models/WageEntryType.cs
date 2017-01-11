@@ -1,7 +1,5 @@
 namespace Solinor.MonthlyWageCalculation.Models
 {
-    using System;
-
     public enum WageEntryType
     {
         Regular,

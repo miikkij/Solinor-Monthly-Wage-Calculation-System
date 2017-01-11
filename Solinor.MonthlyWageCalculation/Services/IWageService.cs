@@ -7,9 +7,10 @@ namespace Solinor.MonthlyWageCalculation.Services
     /// <summary>
     /// Wage Service Interface
     /// </summary>
-    interface IWageService 
+    interface IWageService
     {
         PersonnelWages CalculateWages(IWageCalculation wageCalculation, IHoursCalculation hoursCalculation);
+        
         List<Person> GetPersons();
-    } 
+    }
 }

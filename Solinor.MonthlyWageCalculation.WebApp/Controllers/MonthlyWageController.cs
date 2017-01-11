@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using Solinor.MonthlyWageCalculation.WebApp.Repository;
-using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
-
 namespace Solinor.MonthlyWageCalculation.WebApp.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using Solinor.MonthlyWageCalculation.WebApp.Repository;
+    using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
+
     [Route("api/[controller]")]
     public class MonthlyWageController : Controller
     {
@@ -29,7 +29,7 @@ namespace Solinor.MonthlyWageCalculation.WebApp.Controllers
         public IEnumerable<PersonViewModel> GetPersonnel()
         {
             return WageRepository.GetPersonnel();
-        }        
+        }
     }
 }
 

@@ -32,7 +32,7 @@ namespace Solinor.MonthlyWageCalculation.UnitTests
             Assert.Equal<int>(3, wageService.GetPersons().Count);
 
             // Check start date
-            Assert.Equal<DateTime>(new DateTime(2014,3,2,6,0,0), person.GetHourEntries().First().StartTime);
+            Assert.Equal<DateTime>(new DateTime(2014, 3, 2, 6, 0, 0), person.GetHourEntries().First().StartTime);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Solinor.MonthlyWageCalculation.UnitTests
             var person = wageService.GetPersons().First();
 
             // Check count of entries, more than 1>
-            Assert.True(person.GetHourEntries().Count>1);
+            Assert.True(person.GetHourEntries().Count > 1);
         }
 
         [Fact]
@@ -94,9 +94,9 @@ namespace Solinor.MonthlyWageCalculation.UnitTests
             // Check name
             var wageService = new WageService();
             wageService.UpdateDataFromCSV(csvData.ToString());
-            foreach(var person in wageService.GetPersons())
+            foreach (var person in wageService.GetPersons())
             {
-                Assert.True(person.GetHourEntries().Count>=1);
+                Assert.True(person.GetHourEntries().Count >= 1);
             }
         }
     }

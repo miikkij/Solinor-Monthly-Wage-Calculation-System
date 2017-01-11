@@ -12,7 +12,7 @@ namespace Solinor.MonthlyWageCalculation.Services
     using Solinor.MonthlyWageCalculation.Models;
 
     /// <summary>
-    /// Wage service parses 
+    /// Wage service 
     /// </summary>
     public class WageService : IWageService
     {
@@ -89,11 +89,11 @@ namespace Solinor.MonthlyWageCalculation.Services
             List<CsvRowDataHourEntryParseException> catchedExceptions = ParseHourEntries(resultRows);
 
             // Throw all catched exceptions for further handling
-            foreach(var exception in catchedExceptions)
+            foreach (var exception in catchedExceptions)
             {
                 throw exception;
             }
-        }    
+        }
 
         /// <summary>
         /// Calculate wages
@@ -105,16 +105,16 @@ namespace Solinor.MonthlyWageCalculation.Services
         {
             var personnelWages = new PersonnelWages();
 
-            foreach(var idPersonPair in persons)
+            foreach (var idPersonPair in persons)
             {
                 var personId = idPersonPair.Key;
                 var person = idPersonPair.Value;
 
                 // For each person go through hours and create work days from those hours. 
                 var monthlyWorkdays = new Dictionary<DateTime, List<WorkDay>>();
-                
+
                 var workhoursEntriesPerDay = new Dictionary<DateTime, List<Hours>>();
-                foreach(var hour in person.GetHourEntries())
+                foreach (var hour in person.GetHourEntries())
                 {
                     var dayDateTime = new DateTime(hour.StartTime.Year, hour.StartTime.Month, hour.StartTime.Day);
                     if (!workhoursEntriesPerDay.ContainsKey(dayDateTime))
@@ -125,7 +125,7 @@ namespace Solinor.MonthlyWageCalculation.Services
                 }
 
                 // Create Workdays
-                foreach(var workhourEntries in workhoursEntriesPerDay)
+                foreach (var workhourEntries in workhoursEntriesPerDay)
                 {
                     var workday = new WorkDay(workhourEntries.Value, wageCalculation, hoursCalculation);
 
@@ -136,9 +136,9 @@ namespace Solinor.MonthlyWageCalculation.Services
                     }
                     monthlyWorkdays[monthDateTime].Add(workday);
                 }
-                
+
                 // Create WageSlips 
-                foreach(var monthlyWorkday in monthlyWorkdays)
+                foreach (var monthlyWorkday in monthlyWorkdays)
                 {
                     var date = monthlyWorkday.Key;
                     var workdays = monthlyWorkday.Value;
@@ -157,6 +157,6 @@ namespace Solinor.MonthlyWageCalculation.Services
         public List<Person> GetPersons()
         {
             return persons.Select(idPersonPair => idPersonPair.Value).ToList();
-        }    
+        }
     }
 }

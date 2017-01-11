@@ -108,9 +108,9 @@ class Program
                 Console.WriteLine();                
                 Console.WriteLine("--------- Hour list \n");
 
-                foreach (var workDay in wageSlip.WorkDays)
+                foreach (var workDay in wageSlip.Days)
                 {
-                    Console.WriteLine("\t[" + workDay.Hours.FirstOrDefault().StartTime.Date.ToString("yyyy-MM-dd") + "]----------------------------------------------------");
+                    Console.WriteLine("\t[" + workDay.Date.ToString("yyyy-MM-dd") + "]----------------------------------------------------");
                     foreach (var wageEntry in workDay.WageEntries())
                     {
                         Console.WriteLine("\t  > Desc: " + wageEntry.Description + "\t [Amount: " + wageEntry.Hours.ToString("n2") + "]" +  

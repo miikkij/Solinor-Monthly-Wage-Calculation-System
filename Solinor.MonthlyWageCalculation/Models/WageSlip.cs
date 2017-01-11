@@ -9,8 +9,9 @@ namespace Solinor.MonthlyWageCalculation.Models
     /// </summary>
     public class WageSlip
     {
-        public UInt64 personId; // lets keep this
-        public List<WorkDay> WorkDays = new List<WorkDay>();
+        public UInt64 personId { get; private set; } 
+        
+        private List<WorkDay> WorkDays = new List<WorkDay>();
 
         public DateTime Date { get; private set; }
 
@@ -37,14 +38,6 @@ namespace Solinor.MonthlyWageCalculation.Models
         public decimal GetTotalHours(HoursType type)
         {
             return this.WorkDays.Sum(x => x.GetHours(type));
-        }
-
-        public string TotalPay
-        {
-            get 
-            {
-                return this.Totalpay().ToString("n2");
-            }
         }
 
         public decimal TotalHoursAll

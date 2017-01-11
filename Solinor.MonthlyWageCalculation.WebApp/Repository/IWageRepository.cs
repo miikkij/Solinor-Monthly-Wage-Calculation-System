@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-using Solinor.MonthlyWageCalculation.Models;
+using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
 
-namespace MvcApp.Repository
+namespace Solinor.MonthlyWageCalculation.WebApp.Repository
 {
     public interface IWageRepository
     {
-        PersonnelWages GetPersonnelWages();
-        IEnumerable<Person> GetPersonnel();
-        Person GetPerson(string id);    
-        IEnumerable<WageSlip> GetWagesByPersonId(string id);
+        IEnumerable<PersonViewModel> GetPersonnel();
+        PersonViewModel GetPerson(string id);    
     }
 }

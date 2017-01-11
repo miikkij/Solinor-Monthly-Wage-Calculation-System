@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Solinor.MonthlyWageCalculation.Models;
-using MvcApp.Repository;
+using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
+using Solinor.MonthlyWageCalculation.WebApp.Repository;
 
-namespace MvcApp.Controllers
+namespace Solinor.MonthlyWageCalculation.WebApp.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,14 +19,15 @@ namespace MvcApp.Controllers
 
         public IActionResult Index()
         {
-            ViewData["MonthlyWages"] = this.WageRepository.GetPersonnelWages().MonthlyWages;
+            /*ViewData["MonthlyWages"] = this.WageRepository.GetPersonnelWages().MonthlyWages;
             var person = this.WageRepository.GetPerson(this.WageRepository.GetWagesByPersonId("1").FirstOrDefault().personId.ToString());
             ViewData["MVP"] = new MVP()
             {
                 Id = person.Id.ToString(),
                 Name = person.Name,
                 Pay = this.WageRepository.GetWagesByPersonId("1").FirstOrDefault().TotalPay
-            }; 
+            };*/
+            ViewData["PersonnelWages"] = this.WageRepository.GetPersonnel(); 
             return View();
         }
 

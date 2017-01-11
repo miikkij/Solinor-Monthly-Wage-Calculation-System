@@ -1,19 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.IO;
-using System.Text;
-
-//using Microsoft.Extensions.PlatformAbstractions;
-
-using Solinor.MonthlyWageCalculation.Csv;
-using Solinor.MonthlyWageCalculation.Calculations;
-using Solinor.MonthlyWageCalculation.Models;
-using Solinor.MonthlyWageCalculation.Services;
-
-namespace MvcApp.Repository
+namespace Solinor.MonthlyWageCalculation.WebApp.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.IO;
+    using System.Text;
+
+    using Solinor.MonthlyWageCalculation.Csv;
+    using Solinor.MonthlyWageCalculation.Calculations;
+    using Solinor.MonthlyWageCalculation.Models;
+    using Solinor.MonthlyWageCalculation.Services;
+    using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
+
     public class WageRepository : IWageRepository
     {
         private static WageService wageService;
@@ -21,28 +19,57 @@ namespace MvcApp.Repository
         private static DefaultHoursCalculation defaultHourCalculation;
         private static PersonnelWages personnelWages;
 
-        public Person GetPerson(string id)
+        public PersonViewModel GetPerson(string id)
         {
+            var personViewModel = new PersonViewModel();
+
             var person = wageService.GetPersons().FirstOrDefault(x => x.Id.ToString() == id);
-            if (person == null) person = new Person(0, "");
-            return person;
+            if (person != null) 
+            {
+                var wages = personnelWages.MonthlyWages.FirstOrDefault(x => x.Key.Id.ToString() == id).Value;
+                personViewModel.Id = person.Id;
+                personViewModel.Name = person.Name;
+                foreach(var wage in wages)
+                {
+                    var monthlyWageViewModel = new MonthlyWageViewModel();
+                    personViewModel.MonthlyWages.Add(monthlyWageViewModel);
+                    monthlyWageViewModel.TotalEveningHours = wage.GetTotalHours(HoursType.EveningWork);
+                    monthlyWageViewModel.TotalHours = wage.GetTotalHours(HoursType.All);
+                    monthlyWageViewModel.TotalRegularHours = wage.GetTotalHours(HoursType.Regular);
+                    monthlyWageViewModel.TotalOvertimeHours = wage.GetTotalHours(HoursType.Overtime);
+                    monthlyWageViewModel.TotalPay = wage.Totalpay();
+                    monthlyWageViewModel.Person = personViewModel;
+                    foreach(var workday in wage.WorkDays)
+                    {
+                        foreach(var wageEntry in workday.WageEntries())
+                        {
+                            var paymentEntry = new PaymentEntryViewModel();
+                            paymentEntry.Currency = wageEntry.Currency;
+                            paymentEntry.Date = wageEntry.HourEntryStartDate;
+                            paymentEntry.Description = wageEntry.Description;
+                            paymentEntry.Hours = wageEntry.Hours;
+                            paymentEntry.Payment = wageEntry.GetTotal();
+                            monthlyWageViewModel.PaymentEntries.Add(paymentEntry);
+                        }
+                    }
+                }
+            }
+
+            return personViewModel;
         }
 
-        public IEnumerable<Person> GetPersonnel()
+        public IEnumerable<PersonViewModel> GetPersonnel()
         {
-            return wageService.GetPersons();
-        }
+            var personViewModels = new List<PersonViewModel>();
 
-        public PersonnelWages GetPersonnelWages()
-        {
-            return personnelWages;
-        }
+            foreach(var personsWageSlipsKeyValuePair in personnelWages.MonthlyWages)
+            {
+                var person = personsWageSlipsKeyValuePair.Key;
+                var personViewModel = this.GetPerson(person.Id.ToString());
+                personViewModels.Add(personViewModel);
+            }
 
-        public IEnumerable<WageSlip> GetWagesByPersonId(string id)
-        {
-            var wages = personnelWages.MonthlyWages.FirstOrDefault(x => x.Key.Id.ToString() == id).Value;
-            if (wages == null) wages = new List<WageSlip>();
-            return wages;
+            return personViewModels;
         }
 
         private string loadCsvFile(string filename)
@@ -62,14 +89,7 @@ namespace MvcApp.Repository
 
         public WageRepository()
         {
-/*            var pathToFile = env.ApplicationBasePath 
-            + Path.DirectorySeparatorChar.ToString() 
-            + "yourfolder"
-            + Path.DirectorySeparatorChar.ToString() 
-            + "yourfilename.txt";
-
-            string fileContent;*/
-
+            // User CSV file as a source repository;
             var filename = @"HourList201403.csv";
 
             if (!File.Exists(filename))

@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MvcApp.Repository;
+using Solinor.MonthlyWageCalculation.WebApp.Repository;
 
-namespace MvcApp
+namespace Solinor.MonthlyWageCalculation.WebApp
 {
     public class Startup
     {

@@ -1,5 +1,5 @@
 {
-  "name": "asp.net",
+  "name": "Solinor Monthly Wage Calculation System",
   "private": true,
   "dependencies": {
     "bootstrap": "3.3.6",

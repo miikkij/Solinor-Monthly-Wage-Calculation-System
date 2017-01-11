@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Solinor.MonthlyWageCalculation.Models;
-using MvcApp.Repository;
+using Solinor.MonthlyWageCalculation.WebApp.Repository;
+using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
 
-namespace MvcApp.Controllers
+namespace Solinor.MonthlyWageCalculation.WebApp.Controllers
 {
     [Route("api/[controller]")]
     public class MonthlyWageController : Controller
@@ -26,28 +26,10 @@ namespace MvcApp.Controllers
         }
 
         [HttpGet("person")]
-        public IEnumerable<Person> GetPersonnel()
+        public IEnumerable<PersonViewModel> GetPersonnel()
         {
             return WageRepository.GetPersonnel();
-        }
-
-        [HttpGet("personnelwages")]
-        public PersonnelWages GetPersonnelWages()
-        {
-            return WageRepository.GetPersonnelWages();
-        }
-
-        [HttpGet("personnelwages/{id}", Name = "GetWagesByPersonId")]
-        public IActionResult GetPersonnelWagesForPerson(string id)
-        {
-            var item = WageRepository.GetWagesByPersonId(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return new ObjectResult(item);
-        }
-        
+        }        
     }
 }
 

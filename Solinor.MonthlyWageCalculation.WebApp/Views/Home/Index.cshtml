@@ -1,27 +1,26 @@
 ﻿@{
-    @using Solinor.MonthlyWageCalculation.Models;
-    @using MvcApp.Controllers;
+    @using Solinor.MonthlyWageCalculation.WebApp.Controllers;
+    @using Solinor.MonthlyWageCalculation.WebApp.ViewModels;
     ViewData["Title"] = "Home Page";
 
-    var wageSlips = ViewData["MonthlyWages"] as Dictionary<Person, List<WageSlip>>;
-    var mvp = ViewData["MVP"] as MVP;
+    var personnelWages = ViewData["PersonnelWages"] as List<PersonViewModel>;
 }
 
-@foreach (var kvp in wageSlips)
+@foreach (var person in personnelWages)
 {
-<table class="table">
-    <thead>
+    <table class="table">
+        <thead>
+            <tr>
+                <th><p>Id</p></th>
+                <th><p>Name</p></th>
+            </tr>
+        </thead>
         <tr>
-            <th><p>Id</p></th>
-            <th><p>Name</p></th>
+            <td><p>@person.Id</p></td>
+            <td><p>@person.Name</p></td>
         </tr>
-    </thead>
-    <tr>
-        <td><p>@kvp.Key.Id</p></td>
-        <td><p>@kvp.Key.Name</p></td>
-    </tr>
-</table>
-    @foreach (var wageSlip in @kvp.Value)
+    </table>
+    @foreach (var monthlyWage in @person.MonthlyWages)
     {
         <table class="table">
             <thead>
@@ -35,12 +34,12 @@
                 </tr>
             </thead>
             <tr>
-                <td><p>@wageSlip.Date.ToString("MMMM")</p></td>
-                <td><p>@wageSlip.TotalHoursRegular</p></td>
-                <td><p>@wageSlip.TotalHoursEvening</p></td>
-                <td><p>@wageSlip.TotalHoursOvertime</p></td>
-                <td><p>@wageSlip.TotalHoursAll</p></td>
-                <td><p>$@wageSlip.TotalPay</p></td>
+                <td><p>@monthlyWage.Date.ToString("MMMM")</p></td>
+                <td><p>@monthlyWage.TotalRegularHours</p></td>
+                <td><p>@monthlyWage.TotalEveningHours</p></td>
+                <td><p>@monthlyWage.TotalOvertimeHours</p></td>
+                <td><p>@monthlyWage.TotalHours</p></td>
+                <td><p>$@monthlyWage.TotalPayRounded</p></td>
             </tr>
         </table>        
             <table class="table">
@@ -52,70 +51,18 @@
                     <th><p>Payment</p></th>
                 </tr>
             </thead>
-        @foreach(var wday in @wageSlip.Days)
+        @foreach(var paymentEntry in @monthlyWage.PaymentEntries)
         {           
-
-
-            @foreach(var wageEntry in @wday.Entries)
-            {
-                <tr>
-                    <td><p> @wday.GetDate.Day </p></td>
-                    <td><p> @wageEntry.Description </p></td>
-                    <td><p> @wageEntry.Hours </p></td>
-                    <td><p> @wageEntry.Total </p></td>
-                </tr>
-            }
+            <tr>
+                <td><p> @paymentEntry.Date.ToString("MM-dd")</p></td>
+                <td><p> @paymentEntry.Description </p></td>
+                <td><p> @paymentEntry.HoursRounded </p></td>
+                <td><p> @paymentEntry.Currency@paymentEntry.PaymentRounded</p></td>
+            </tr>
         }                
-            </table>     
+        </table>     
     }
     <hr>
     <hr>
     <hr>
 }
-
-@mvp.Id
-@mvp.Name
-@mvp.Pay
-
-<!--div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699562">Add an appsetting in config and access it in app.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run & Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
-</div-->

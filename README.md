@@ -150,3 +150,7 @@ Open address http://localhost:5000 in browser
 # Deployment to linux environment (Production)
 
 - [https://docs.microsoft.com/en-us/aspnet/core/publishing/linuxproduction](https://docs.microsoft.com/en-us/aspnet/core/publishing/linuxproduction)
+
+# Notes
+
+- [Google sheet notes to double check my calculations](https://docs.google.com/spreadsheets/d/1ShHTJHLhGodPnhTxZZcO7WBFpfQuls4gF_B5Os0YRYM/edit?usp=sharing)

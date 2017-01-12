@@ -66,5 +66,4 @@ test_script:
   - ps: dotnet test
   - ps: cd ..
 
-test: off 
 version: 1.0.{build}

@@ -62,16 +62,15 @@ test:
     - Solinor.MonthlyWageCalculation.UnitTests.dll
 
 test_script:
-  - cmd: >-
     # run tests
 
-    %xunit20%\xunit.console .\path\to\test-assembly.dll /xml .\xunit-results.xml
+  - cmd: xunit.console .\Solinor.MonthlyWageCalculation.UnitTests\bin\Debug\netcoreapp1.0\Solinor.MonthlyWageCalculation.UnitTests.dll /xml .\xunit-results.xml
 
     # upload results to AppVeyor
 
-    $wc = New-Object 'System.Net.WebClient'
+  - cmd: $wc = New-Object 'System.Net.WebClient'
 
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\xunit-results.xml))
+  - cmd: $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\xunit-results.xml))
 
 on_finish: # Run the demo to show that it works
   - ps: cd Solinor.MonthlyWageCalculation.ConsoleApp

@@ -48,6 +48,14 @@ build_script:
   - ps: dotnet build
   - ps: dotnet test
   - ps: cd ..
+  - ps: cd Solinor.MonthlyWageCalculation.ConsoleApp
+  - ps: dotnet restore
+  - ps: dotnet build
+  - ps: cd ..  
+  - ps: cd Solinor.MonthlyWageCalculation.WebApp
+  - ps: dotnet restore
+  - ps: dotnet build
+  - ps: cd ..  
 
-test: off 
+test: on 
 version: 1.0.{build}

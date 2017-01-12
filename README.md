@@ -2,6 +2,8 @@
 
 - Requirements are located in folder "Requirements". CSV File is also included there for testing purposes.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/7psw8kuajowhup23?svg=true)](https://ci.appveyor.com/project/miikkij/solinor-monthly-wage-calculation-system)
+
 ### WebApp Demo currently running at [http://solinor.slurpsis.com/](http://solinor.slurpsis.com/)
 
 ### WebApi can be test by using PostMan at [http://solinor.slurpsis.com/api](http://solinor.slurpsis.com/api) address

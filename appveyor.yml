@@ -57,5 +57,10 @@ build_script:
   - ps: dotnet build
   - ps: cd ..  
 
-test: on 
+test_script:
+  - ps: cd Solinor.MonthlyWageCalculation.UnitTests
+  - ps: dotnet test
+  - ps: cd ..
+
+test: off 
 version: 1.0.{build}

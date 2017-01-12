@@ -6,6 +6,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Solinor.MonthlyWageCalculation.WebApp.Repository;
+    using Newtonsoft.Json.Serialization;
+    using Newtonsoft.Json.Schema;
 
     public class Startup
     {
@@ -25,7 +27,12 @@
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
 
             services.AddSingleton<IWageRepository, WageRepository>();
         }

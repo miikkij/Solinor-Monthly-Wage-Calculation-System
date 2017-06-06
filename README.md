@@ -4,11 +4,11 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/7psw8kuajowhup23?svg=true)](https://ci.appveyor.com/project/miikkij/solinor-monthly-wage-calculation-system)
 
-### WebApp Demo currently running at [http://solinor.slurpsis.com/](http://solinor.slurpsis.com/)
+### WebApp Demo currently running at [http://solinor.pause.games/](http://solinor.pause.games/)
 
-### WebApi can be test by using PostMan at [http://solinor.slurpsis.com/api](http://solinor.slurpsis.com/api) address
-- [monthlywage/person](http://solinor.slurpsis.com/api/monthlywage/person) - get wages and hours for each person
-- [monthlywage/person/](http://solinor.slurpsis.com/api/monthlywage/person/1){id} - get persons wage slips by person id
+### WebApi can be test by using PostMan at [http://solinor.pause.games/api](http://solinor.pause.games/api) address
+- [monthlywage/person](http://solinor.pause.games/api/monthlywage/person) - get wages and hours for each person
+- [monthlywage/person/](http://solinor.pause.games/api/monthlywage/person/1){id} - get persons wage slips by person id
 
 
 
